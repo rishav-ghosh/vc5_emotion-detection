@@ -4,7 +4,7 @@ import os
 import yaml
 import logging
 from typing import Tuple
-from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 # Configure logging
 logging.basicConfig(
@@ -48,14 +48,14 @@ def extract_features(
         X_test = test_data['content'].values
         y_test = test_data['sentiment'].values
 
-        vectorizer = CountVectorizer(max_features=max_features)
-        X_train_bow = vectorizer.fit_transform(X_train)
-        X_test_bow = vectorizer.transform(X_test)
+        vectorizer = TfidfVectorizer(max_features=max_features)
+        X_train_tfidf = vectorizer.fit_transform(X_train)
+        X_test_tfidf = vectorizer.transform(X_test)
 
-        train_df = pd.DataFrame(X_train_bow.toarray())
+        train_df = pd.DataFrame(X_train_tfidf.toarray())
         train_df['label'] = y_train
 
-        test_df = pd.DataFrame(X_test_bow.toarray())
+        test_df = pd.DataFrame(X_test_tfidf.toarray())
         test_df['label'] = y_test
 
         logging.info("Feature extraction completed.")
@@ -68,8 +68,8 @@ def save_features(train_df: pd.DataFrame, test_df: pd.DataFrame, output_dir: str
     """Save feature DataFrames to CSV files."""
     try:
         os.makedirs(output_dir, exist_ok=True)
-        train_path = os.path.join(output_dir, "train_bow.csv")
-        test_path = os.path.join(output_dir, "test_bow.csv")
+        train_path = os.path.join(output_dir, "train_tfidf.csv")
+        test_path = os.path.join(output_dir, "test_tfidf.csv")
         train_df.to_csv(train_path, index=False)
         test_df.to_csv(test_path, index=False)
         logging.info(f"Features saved to {output_dir}")

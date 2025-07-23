@@ -56,31 +56,31 @@ stages:
       size: 328850
     - path: src/features/features.py
       hash: md5
-      md5: 881647e171bb591405ffd679089ece95
-      size: 3441
+      md5: f8bd418c6ce6d0aa892223dc81049553
+      size: 3453
     params:
       params.yaml:
         features.max_features: 1500
     outs:
-    - path: data/interim/test_bow.csv
+    - path: data/interim/test_tfidf.csv
       hash: md5
-      md5: 1f3e44214a53ba11cd538902a78f6344
-      size: 11864296
-    - path: data/interim/train_bow.csv
+      md5: 9e9a5d59f952a71de329704c23c79a39
+      size: 24071081
+    - path: data/interim/train_tfidf.csv
       hash: md5
-      md5: de4e675cbefbe50d0a2799a0ff036333
-      size: 17865294
+      md5: 8c453c285a07156b0032d44524695161
+      size: 36263535
   model_training:
     cmd: python3 modelling/modelling.py
     deps:
-    - path: data/interim/train_bow.csv
+    - path: data/interim/train_tfidf.csv
       hash: md5
-      md5: de4e675cbefbe50d0a2799a0ff036333
-      size: 17865294
+      md5: 8c453c285a07156b0032d44524695161
+      size: 36263535
     - path: modelling/modelling.py
       hash: md5
-      md5: db89beb53b6299118715deb8e81158f4
-      size: 2694
+      md5: 3ae5a2abe160f04e9a8b84cf615571c0
+      size: 2696
     params:
       params.yaml:
         modelling.max_depth: 30
@@ -88,25 +88,25 @@ stages:
     outs:
     - path: models/random_forest_model.pkl
       hash: md5
-      md5: fdaec39cbbb9753d41a1a4cc694b452f
-      size: 6510025
+      md5: a5253547a4988fa1c92f09245d8ca41b
+      size: 5917944
   model_evaluation:
     cmd: python3 modelling/model_evaluation.py
     deps:
-    - path: data/interim/test_bow.csv
+    - path: data/interim/test_tfidf.csv
       hash: md5
-      md5: 1f3e44214a53ba11cd538902a78f6344
-      size: 11864296
+      md5: 9e9a5d59f952a71de329704c23c79a39
+      size: 24071081
     - path: modelling/model_evaluation.py
       hash: md5
-      md5: 4f09bcdd43aaf9f7db54e78fc3119d52
-      size: 2671
+      md5: 43271e82bb69fd47845e7bfb9ca64855
+      size: 2673
     - path: models/random_forest_model.pkl
       hash: md5
-      md5: fdaec39cbbb9753d41a1a4cc694b452f
-      size: 6510025
+      md5: a5253547a4988fa1c92f09245d8ca41b
+      size: 5917944
     outs:
     - path: reports/metrics.json
       hash: md5
-      md5: 61dcb3e79fab078bf44a3844084ce332
-      size: 143
+      md5: cbcc136dd377ae5b92ad951d812ec875
+      size: 144
